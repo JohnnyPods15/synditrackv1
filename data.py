@@ -1,7 +1,8 @@
 """
 Simulated deal data based on real KBCM transactions.
-US Fertility Enterprises – $1.05B Senior Secured Credit Facilities (2024)
-Apex Clean Energy – $1.05B Senior Secured Credit Facilities (2025)
+US Fertility Enterprises - $1.07B Senior Secured Credit Facilities (2024)
+Apex Clean Energy - $1.05B Senior Secured Credit Facilities (2025)
+Source: key.com/businesses-institutions/our-transactions
 """
 
 from datetime import date
@@ -10,12 +11,12 @@ DEALS = {
     "USF-2024": {
         "deal_id": "USF-2024",
         "borrower": "US Fertility Enterprises",
-        "industry": "Healthcare – Fertility Services",
-        "sponsor": "Amulet Capital Partners",
-        "purpose": "LBO Refinancing & Growth Capital",
-        "total_facility": 1_050_000_000,
+        "industry": "Healthcare - Fertility Services",
+        "sponsor": "Amulet Capital Partners & L Catterton",
+        "purpose": "LBO Recapitalization & Acquisition of Genetics & IVF Institute",
+        "total_facility": 1_070_000_000,
         "lead_arranger": "KeyBanc Capital Markets (KBCM)",
-        "bookrunners": ["KeyBanc Capital Markets", "Truist Securities", "Regions Capital Markets"],
+        "bookrunners": ["KeyBanc Capital Markets", "Cain Brothers"],
         "administrative_agent": "KeyBank National Association",
         "deal_rating": "B2 / B",
         "announcement_date": date(2024, 3, 15),
@@ -23,7 +24,7 @@ DEALS = {
         "tranches": {
             "Revolving Credit Facility": {
                 "type": "Revolver",
-                "amount": 150_000_000,
+                "amount": 120_000_000,
                 "currency": "USD",
                 "tenor": "5 years",
                 "maturity_date": date(2029, 4, 30),
@@ -42,12 +43,12 @@ DEALS = {
                     {"name": "Regions Bank", "hold_mm": 25.0, "role": "Lender"},
                     {"name": "Fifth Third Bank", "hold_mm": 25.0, "role": "Lender"},
                 ],
-                "flex_status": "Priced tight – spread flexed in 25bps from initial talk",
+                "flex_status": "Priced tight - spread flexed in 25bps from initial talk",
                 "notes": "Subject to springing maturity if TLB outstanding 91 days prior to TLB maturity.",
             },
             "Term Loan B": {
                 "type": "TLB",
-                "amount": 500_000_000,
+                "amount": 825_000_000,
                 "currency": "USD",
                 "tenor": "7 years",
                 "maturity_date": date(2031, 4, 30),
@@ -69,12 +70,12 @@ DEALS = {
                     {"name": "Antares Capital", "hold_mm": 60.0, "role": "Lender"},
                     {"name": "Various CLOs / Funds", "hold_mm": 225.0, "role": "Syndicate"},
                 ],
-                "flex_status": "No flex – priced at initial talk (SOFR+425, OID 99)",
+                "flex_status": "No flex - priced at initial talk (SOFR+425, OID 99)",
                 "notes": "101 soft call protection for 6 months. 1% annual amortization.",
             },
-            "Letter of Credit Facility": {
+            "Delayed Draw Term Loan": {
                 "type": "DDTL",
-                "amount": 400_000_000,
+                "amount": 125_000_000,
                 "currency": "USD",
                 "tenor": "7 years",
                 "maturity_date": date(2031, 4, 30),
@@ -83,7 +84,7 @@ DEALS = {
                     "spread_bps": 425,
                     "floor_bps": 100,
                     "oid": 99.0,
-                    "commitment_fee_bps": 212,  # 50% of margin
+                    "commitment_fee_bps": 212,
                     "drawn_margin_bps": 425,
                 },
                 "status": "Partially Drawn",
@@ -96,8 +97,8 @@ DEALS = {
                     {"name": "Golub Capital", "hold_mm": 20.0, "role": "Lender"},
                     {"name": "Antares Capital", "hold_mm": 15.0, "role": "Lender"},
                 ],
-                "flex_status": "Same as TLB – priced in line",
-                "notes": "18-month availability window for acquisitions. Commitment fee on undrawn.",
+                "flex_status": "Same as TLB - priced in line",
+                "notes": "18-month availability window for acquisition of fertility clinic platforms. Commitment fee on undrawn balance.",
             },
         },
         "milestones": [
@@ -106,9 +107,10 @@ DEALS = {
             {"milestone": "Lender Meetings", "tranche": "TLB / DDTL", "due_date": date(2024, 3, 28), "status": "Complete", "owner": "KBCM Syndicate"},
             {"milestone": "Commitments Due", "tranche": "Revolver", "due_date": date(2024, 4, 5), "status": "Complete", "owner": "KBCM Agency"},
             {"milestone": "Allocations Finalized", "tranche": "TLB", "due_date": date(2024, 4, 10), "status": "Complete", "owner": "KBCM Syndicate"},
-            {"milestone": "Credit Agreement Executed", "tranche": "All", "due_date": date(2024, 4, 25), "status": "Complete", "owner": "Legal – Latham & Watkins"},
+            {"milestone": "Credit Agreement Executed", "tranche": "All", "due_date": date(2024, 4, 25), "status": "Complete", "owner": "Legal - Latham & Watkins"},
             {"milestone": "Closing & Funding", "tranche": "All", "due_date": date(2024, 4, 30), "status": "Complete", "owner": "KBCM Agency"},
-            {"milestone": "Letter of Credit Facility Draw Down", "tranche": "DDTL", "due_date": date(2024, 9, 15), "status": "Complete", "owner": "US Fertility / Agent"},
+            {"milestone": "DDTL Draw #1", "tranche": "DDTL", "due_date": date(2024, 9, 15), "status": "Complete", "owner": "US Fertility / Agent"},
+            {"milestone": "DDTL Availability Period End", "tranche": "DDTL", "due_date": date(2025, 4, 30), "status": "Upcoming", "owner": "KBCM Agency"},
             {"milestone": "Annual Compliance Certificate", "tranche": "All", "due_date": date(2025, 5, 30), "status": "Upcoming", "owner": "Borrower / Agent"},
         ],
         "followups": [
@@ -123,9 +125,9 @@ DEALS = {
     "ACE-2025": {
         "deal_id": "ACE-2025",
         "borrower": "Apex Clean Energy",
-        "industry": "Renewable Energy – Wind & Solar",
+        "industry": "Renewable Energy - Wind & Solar",
         "sponsor": "Stonepeak Infrastructure Partners",
-        "purpose": "Project Finance – Portfolio Expansion",
+        "purpose": "Project Finance - Portfolio Expansion",
         "total_facility": 1_050_000_000,
         "lead_arranger": "KeyBanc Capital Markets (KBCM)",
         "bookrunners": ["KeyBanc Capital Markets", "BMO Capital Markets", "MUFG"],
@@ -154,10 +156,10 @@ DEALS = {
                     {"name": "BMO Bank", "hold_mm": 90.0, "role": "Lender"},
                     {"name": "MUFG Bank", "hold_mm": 90.0, "role": "Lender"},
                     {"name": "ING Capital", "hold_mm": 75.0, "role": "Lender"},
-                    {"name": "Société Générale", "hold_mm": 70.0, "role": "Lender"},
+                    {"name": "Societe Generale", "hold_mm": 70.0, "role": "Lender"},
                     {"name": "Other Banks", "hold_mm": 75.0, "role": "Syndicate"},
                 ],
-                "flex_status": "Spread flexed wide 25bps – energy market volatility",
+                "flex_status": "Spread flexed wide 25bps - energy market volatility",
                 "notes": "ESG-linked margin ratchet: -10bps if renewable capacity targets met annually.",
             },
             "Letter of Credit Facility": {
@@ -174,7 +176,7 @@ DEALS = {
                     "commitment_fee_bps": 40,
                     "drawn_margin_bps": 200,
                 },
-                "status": "Active – Partially Utilized",
+                "status": "Active - Partially Utilized",
                 "lenders": [
                     {"name": "KeyBank National Association", "hold_mm": 120.0, "role": "LC Issuer / Agent"},
                     {"name": "BMO Bank", "hold_mm": 100.0, "role": "LC Participant"},
@@ -182,7 +184,7 @@ DEALS = {
                     {"name": "ING Capital", "hold_mm": 80.0, "role": "LC Participant"},
                 ],
                 "flex_status": "Priced at initial talk",
-                "notes": "Supports PPA and interconnection obligations. fronting fee 12.5bps.",
+                "notes": "Supports PPA and interconnection obligations. Fronting fee 12.5bps.",
             },
             "Revolving Credit Facility": {
                 "type": "Revolver",
@@ -214,7 +216,7 @@ DEALS = {
             {"milestone": "Lender Meetings", "tranche": "TL / Revolver", "due_date": date(2025, 9, 25), "status": "Complete", "owner": "KBCM Syndicate"},
             {"milestone": "Commitments Received", "tranche": "All", "due_date": date(2025, 10, 10), "status": "Complete", "owner": "KBCM Agency"},
             {"milestone": "Allocations Finalized", "tranche": "All", "due_date": date(2025, 10, 20), "status": "Complete", "owner": "KBCM Syndicate"},
-            {"milestone": "Credit Agreement Signed", "tranche": "All", "due_date": date(2025, 11, 10), "status": "Complete", "owner": "Legal – Simpson Thacher"},
+            {"milestone": "Credit Agreement Signed", "tranche": "All", "due_date": date(2025, 11, 10), "status": "Complete", "owner": "Legal - Simpson Thacher"},
             {"milestone": "Closing & Funding", "tranche": "All", "due_date": date(2025, 11, 14), "status": "Complete", "owner": "KBCM Agency"},
             {"milestone": "First ESG Reporting Period", "tranche": "TL", "due_date": date(2026, 5, 1), "status": "Upcoming", "owner": "Apex / Agent"},
             {"milestone": "Annual Lender Call", "tranche": "All", "due_date": date(2026, 6, 1), "status": "Upcoming", "owner": "KBCM Agency"},

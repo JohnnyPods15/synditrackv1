@@ -1,6 +1,6 @@
 """
 Simulated deal data based on real KBCM transactions.
-US Fertility Enterprises – $1.07B Senior Secured Credit Facilities (2024)
+US Fertility Enterprises – $1.05B Senior Secured Credit Facilities (2024)
 Apex Clean Energy – $1.05B Senior Secured Credit Facilities (2025)
 """
 
@@ -13,7 +13,7 @@ DEALS = {
         "industry": "Healthcare – Fertility Services",
         "sponsor": "Amulet Capital Partners",
         "purpose": "LBO Refinancing & Growth Capital",
-        "total_facility": 1_070_000_000,
+        "total_facility": 1_050_000_000,
         "lead_arranger": "KeyBanc Capital Markets (KBCM)",
         "bookrunners": ["KeyBanc Capital Markets", "Truist Securities", "Regions Capital Markets"],
         "administrative_agent": "KeyBank National Association",

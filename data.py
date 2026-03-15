@@ -108,8 +108,7 @@ DEALS = {
             {"milestone": "Allocations Finalized", "tranche": "TLB", "due_date": date(2024, 4, 10), "status": "Complete", "owner": "KBCM Syndicate"},
             {"milestone": "Credit Agreement Executed", "tranche": "All", "due_date": date(2024, 4, 25), "status": "Complete", "owner": "Legal – Latham & Watkins"},
             {"milestone": "Closing & Funding", "tranche": "All", "due_date": date(2024, 4, 30), "status": "Complete", "owner": "KBCM Agency"},
-            {"milestone": "DDTL Draw #1", "tranche": "DDTL", "due_date": date(2024, 9, 15), "status": "Complete", "owner": "US Fertility / Agent"},
-            {"milestone": "DDTL Availability Period End", "tranche": "DDTL", "due_date": date(2025, 4, 30), "status": "Upcoming", "owner": "KBCM Agency"},
+            {"milestone": "Letter of Credit Facility Draw Down", "tranche": "DDTL", "due_date": date(2024, 9, 15), "status": "Complete", "owner": "US Fertility / Agent"},
             {"milestone": "Annual Compliance Certificate", "tranche": "All", "due_date": date(2025, 5, 30), "status": "Upcoming", "owner": "Borrower / Agent"},
         ],
         "followups": [

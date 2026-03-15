@@ -23,7 +23,7 @@ DEALS = {
         "tranches": {
             "Revolving Credit Facility": {
                 "type": "Revolver",
-                "amount": 120_000_000,
+                "amount": 150_000_000,
                 "currency": "USD",
                 "tenor": "5 years",
                 "maturity_date": date(2029, 4, 30),
@@ -47,7 +47,7 @@ DEALS = {
             },
             "Term Loan B": {
                 "type": "TLB",
-                "amount": 825_000_000,
+                "amount": 500_000_000,
                 "currency": "USD",
                 "tenor": "7 years",
                 "maturity_date": date(2031, 4, 30),
@@ -72,9 +72,9 @@ DEALS = {
                 "flex_status": "No flex – priced at initial talk (SOFR+425, OID 99)",
                 "notes": "101 soft call protection for 6 months. 1% annual amortization.",
             },
-            "Delayed Draw Term Loan": {
+            "Letter of Credit Facility": {
                 "type": "DDTL",
-                "amount": 125_000_000,
+                "amount": 400_000_000,
                 "currency": "USD",
                 "tenor": "7 years",
                 "maturity_date": date(2031, 4, 30),

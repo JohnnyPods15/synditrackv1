@@ -10,9 +10,36 @@ USF: DDTL commitment fee corrected from 212bps to 63bps (market standard ~50% of
 ACE: Close date corrected to Nov 3, 2025
 ACE: Sponsor removed - not publicly confirmed
 ACE: Deal rating revised from BB-/Ba3 to B+/B1 (more appropriate for developer credit)
+
+v2 additions:
+All tranches: go_current_date added as top-level field (maturity_date minus 12 months)
+go_current_date represents when the loan reclassifies to current liabilities on borrower B/S
+and when agent/lenders begin tracking refinancing / extension risk.
+
+Spreads repriced to reflect post-close market tightening (repricing amendment framing):
+USF Revolver:  400bps → 350bps
+USF TLB:       425bps → 375bps
+USF DDTL:      425bps → 375bps
+ACE Term Loan: 275bps → 250bps
+ACE Revolver:  250bps → 225bps
+ACE LC Facility: unchanged at 200bps (contingent obligation, already appropriate)
+drawn_margin_bps updated in sync with spread_bps on all affected tranches.
 """
 
 from datetime import date
+from dateutil.relativedelta import relativedelta
+
+
+def compute_go_current(maturity_date):
+    """Returns the go-current date: 12 months prior to maturity.
+    This is the date the loan reclassifies from long-term to current
+    liabilities on the borrower's balance sheet, and the point at which
+    agent/lenders begin monitoring refinancing or extension risk.
+    """
+    if maturity_date is None:
+        return None
+    return maturity_date - relativedelta(months=12)
+
 
 DEALS = {
     "USF-2024": {
@@ -35,13 +62,14 @@ DEALS = {
                 "currency": "USD",
                 "tenor": "5 years",
                 "maturity_date": date(2030, 12, 31),
+                "go_current_date": compute_go_current(date(2030, 12, 31)),  # 2029-12-31
                 "pricing": {
                     "index": "SOFR",
-                    "spread_bps": 400,
+                    "spread_bps": 350,       # repriced from 400bps
                     "floor_bps": 0,
                     "oid": None,
                     "commitment_fee_bps": 50,
-                    "drawn_margin_bps": 400,
+                    "drawn_margin_bps": 350, # in sync with spread
                 },
                 "status": "Funded",
                 "lenders": [
@@ -62,13 +90,14 @@ DEALS = {
                 "currency": "USD",
                 "tenor": "7 years",
                 "maturity_date": date(2032, 12, 31),
+                "go_current_date": compute_go_current(date(2032, 12, 31)),  # 2031-12-31
                 "pricing": {
                     "index": "SOFR",
-                    "spread_bps": 425,
+                    "spread_bps": 375,       # repriced from 425bps
                     "floor_bps": 100,
                     "oid": 99.0,
                     "commitment_fee_bps": None,
-                    "drawn_margin_bps": 425,
+                    "drawn_margin_bps": 375, # in sync with spread
                 },
                 "status": "Funded",
                 "lenders": [
@@ -93,18 +122,16 @@ DEALS = {
                 "currency": "USD",
                 "tenor": "7 years",
                 "maturity_date": date(2032, 12, 31),
+                "go_current_date": compute_go_current(date(2032, 12, 31)),  # 2031-12-31
                 "pricing": {
                     "index": "SOFR",
-                    "spread_bps": 425,
+                    "spread_bps": 375,       # repriced from 425bps
                     "floor_bps": 100,
                     "oid": 99.0,
-                    # Corrected: market standard DDTL commitment fee is ~50% of spread
-                    # 50% of 425bps = ~213bps is mathematically correct BUT
-                    # in practice DDTL commitment fees are negotiated lower, typically
-                    # 50-75bps, as borrowers push back on holding cost of undrawn capital.
-                    # Using 63bps as a realistic market rate for a healthcare services TLB DDTL.
+                    # Commitment fee on undrawn balance - market standard ~50-75bps,
+                    # negotiated lower than the spread. Unchanged by repricing.
                     "commitment_fee_bps": 63,
-                    "drawn_margin_bps": 425,
+                    "drawn_margin_bps": 375, # in sync with spread
                 },
                 "status": "Partially Drawn",
                 "availability_period_end": date(2027, 6, 30),
@@ -174,13 +201,14 @@ DEALS = {
                 "currency": "USD",
                 "tenor": "5 years",
                 "maturity_date": date(2030, 11, 3),
+                "go_current_date": compute_go_current(date(2030, 11, 3)),  # 2029-11-03
                 "pricing": {
                     "index": "SOFR",
-                    "spread_bps": 275,
+                    "spread_bps": 250,       # repriced from 275bps
                     "floor_bps": 0,
                     "oid": 99.5,
                     "commitment_fee_bps": None,
-                    "drawn_margin_bps": 275,
+                    "drawn_margin_bps": 250, # in sync with spread
                 },
                 "status": "Funded",
                 "lenders": [
@@ -201,9 +229,10 @@ DEALS = {
                 "currency": "USD",
                 "tenor": "5 years",
                 "maturity_date": date(2030, 11, 3),
+                "go_current_date": compute_go_current(date(2030, 11, 3)),  # 2029-11-03
                 "pricing": {
                     "index": "N/A",
-                    "spread_bps": 200,
+                    "spread_bps": 200,       # unchanged - contingent obligation, already appropriate
                     "floor_bps": None,
                     "oid": None,
                     "commitment_fee_bps": 40,
@@ -225,13 +254,14 @@ DEALS = {
                 "currency": "USD",
                 "tenor": "5 years",
                 "maturity_date": date(2030, 11, 3),
+                "go_current_date": compute_go_current(date(2030, 11, 3)),  # 2029-11-03
                 "pricing": {
                     "index": "SOFR",
-                    "spread_bps": 250,
+                    "spread_bps": 225,       # repriced from 250bps
                     "floor_bps": 0,
                     "oid": None,
                     "commitment_fee_bps": 37,
-                    "drawn_margin_bps": 250,
+                    "drawn_margin_bps": 225, # in sync with spread
                 },
                 "status": "Undrawn",
                 "lenders": [

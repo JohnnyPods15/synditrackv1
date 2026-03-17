@@ -99,6 +99,18 @@ def milestone_progress(milestones):
     done = sum(1 for m in milestones if m["status"] == "Complete")
     return done, len(milestones)
 
+def go_current_cell(t):
+    """Returns formatted go-current date string with alert flag if applicable."""
+    gc = t.get("go_current_date")
+    if not gc:
+        return "—"
+    label = gc.strftime("%b %d, %Y")
+    if gc <= date.today():
+        return f'{label} <span style="color:#f85149;font-size:0.7rem;">● CURRENT</span>'
+    elif (gc - date.today()).days <= 365:
+        return f'{label} <span style="color:#d29922;font-size:0.7rem;">⚠ &lt;12mo</span>'
+    return label
+
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## 🏦 SyndiTrack")
@@ -190,13 +202,28 @@ if view == "📊 Deal Overview":
             <div style="margin-top:0.4rem;font-size:0.82rem;color:#e6edf3;line-height:1.8;">{br_html}</div>
         </div>""", unsafe_allow_html=True)
 
-    # Tranche snapshot table
+    # Tranche snapshot table — includes Maturity Date and Go-Current Date
     st.markdown('<div class="section-header">Tranche Snapshot</div>', unsafe_allow_html=True)
-    rows = [{"Tranche": n, "Type": t["type"], "Amount": fmt_mm(t["amount"]), "Pricing": pricing_str(t["pricing"]), "Tenor": t["tenor"], "Status": t["status"]} for n, t in tranches.items()]
+    rows = []
+    for n, t in tranches.items():
+        maturity = t["maturity_date"].strftime("%b %d, %Y") if t.get("maturity_date") else "—"
+        rows.append({
+            "Tranche": n,
+            "Type": t["type"],
+            "Amount": fmt_mm(t["amount"]),
+            "Pricing": pricing_str(t["pricing"]),
+            "Tenor": t["tenor"],
+            "Maturity Date": maturity,
+            "Go-Current Date": go_current_cell(t),
+            "Status": t["status"],
+        })
     df = pd.DataFrame(rows)
     html = '<table class="styled-table"><thead><tr>' + "".join(f"<th>{c}</th>" for c in df.columns) + "</tr></thead><tbody>"
     for _, row in df.iterrows():
-        html += "<tr>" + "".join(f"<td>{status_badge(str(row[c])) if c == 'Status' else row[c]}</td>" for c in df.columns) + "</tr>"
+        html += "<tr>" + "".join(
+            f"<td>{status_badge(str(row[c])) if c == 'Status' else row[c]}</td>"
+            for c in df.columns
+        ) + "</tr>"
     html += "</tbody></table>"
     st.markdown(html, unsafe_allow_html=True)
 
@@ -224,6 +251,20 @@ elif view == "🏗️ Tranches & Pricing":
     for name, t in tranches.items():
         p = t["pricing"]
 
+        # Maturity and go-current dates for the card subtitle
+        maturity_str = t["maturity_date"].strftime("%b %d, %Y") if t.get("maturity_date") else "—"
+        gc = t.get("go_current_date")
+        if gc:
+            gc_str = gc.strftime("%b %d, %Y")
+            if gc <= date.today():
+                gc_display = f'<span style="color:#f85149;">{gc_str} ● CURRENT</span>'
+            elif (gc - date.today()).days <= 365:
+                gc_display = f'<span style="color:#d29922;">{gc_str} ⚠ &lt;12mo</span>'
+            else:
+                gc_display = f'<span style="color:#8b949e;">{gc_str}</span>'
+        else:
+            gc_display = "—"
+
         extra_fields = ""
         if p.get("floor_bps"):
             extra_fields += f'<div><div class="tranche-field-label">SOFR Floor</div><div class="tranche-field-value">{p["floor_bps"]}bps</div></div>'
@@ -237,7 +278,12 @@ elif view == "🏗️ Tranches & Pricing":
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
                 <div>
                     <div class="tranche-title">{name}</div>
-                    <div style="font-size:0.75rem;color:#8b949e;">{t["type"]} · {t["tenor"]} · Matures {t["maturity_date"].strftime("%b %Y")}</div>
+                    <div style="font-size:0.75rem;color:#8b949e;">
+                        {t["type"]} · {t["tenor"]} · Matures <span style="color:#e6edf3;">{maturity_str}</span>
+                    </div>
+                    <div style="font-size:0.75rem;margin-top:0.3rem;">
+                        <span style="color:#8b949e;">Go-Current: </span>{gc_display}
+                    </div>
                 </div>
                 <div style="text-align:right;">
                     {status_badge(t["status"])}

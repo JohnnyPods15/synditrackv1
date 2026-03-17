@@ -207,13 +207,13 @@ if view == "📊 Deal Overview":
     rows = []
     for n, t in tranches.items():
         maturity = t["maturity_date"].strftime("%b %d, %Y") if t.get("maturity_date") else "—"
+        tenor_maturity = f'{t["tenor"]} · {maturity}'
         rows.append({
             "Tranche": n,
             "Type": t["type"],
             "Amount": fmt_mm(t["amount"]),
             "Pricing": pricing_str(t["pricing"]),
-            "Tenor": t["tenor"],
-            "Maturity Date": maturity,
+            "Tenor / Maturity": tenor_maturity,
             "Go-Current Date": go_current_cell(t),
             "Status": t["status"],
         })
